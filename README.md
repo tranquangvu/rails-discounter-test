@@ -1,24 +1,16 @@
-# README
+# Discounter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+1. Installation:
 
-* Ruby version
+- Use ruby `3.2.2`
+- Install bundler: `gem install bundler`
+- Install packages: `bundle install`
+- Generate new rails master key `rm -f config/credentials.yml.enc && rm -rf config/master.key && EDITOR=vim rails credentials:edit`
+- Database setup: `bin/rails db:setup`
+- Start rails server: `bin/rails s`
 
-* System dependencies
+2. Testing:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Run `rspec` | `bin/bundle exec rspec`
