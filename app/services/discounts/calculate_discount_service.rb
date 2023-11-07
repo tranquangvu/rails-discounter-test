@@ -8,8 +8,7 @@ module Discounts
     end
 
     def call
-      discount_perc = Discounts::DiscountPercentageCalculator.new(discount_rules)
-                                                             .total_discount_percentage
+      discount_perc = discount_calculator.total_discount_percentage
       final_price = product.price * (1 - (discount_perc / 100.0))
 
       { final_price: final_price, discount_perc: discount_perc }
@@ -17,12 +16,12 @@ module Discounts
 
     private
 
+    def discount_calculator
+      @discount_calculator ||= Discounts::DiscountPercentageCalculator.new(discount_rules)
+    end
+
     def discount_rules
-      [
-        Discounts::Rules::ByUserPurchaseCountDiscountRule,
-        Discounts::Rules::ByProductPriceDiscountRule,
-        Discounts::Rules::ByProductCategoryDiscountRule
-      ].map { |klass| klass.new(user, product) }
+      @discount_rules ||= Discounts::Rules::BaseDiscountRule.default_rules(user, product)
     end
   end
 end
